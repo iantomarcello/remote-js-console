@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remote JS Console | Browser Test</title>
+</head>
+<body>
+  <h1>Hi</h1>
+  <button id="logs">I wills logs consolez</button>
+  <button id="warn">I wills warnz consolez</button>
+  <button id="error">I wills errorz consolez</button>
+
+  <script type="module">
+    import { ConsoleProxy } from '../src/client.js';
+
+    const hostname = location.hostname;
+    const ProxyClass = new ConsoleProxy(`ws://${hostname}:8080`);
+    let consoleProxy = await ProxyClass.getProxy();
+
+    logs.onclick = () => consoleProxy.log('casual log from client');
+    warn.onclick = () => consoleProxy.warn('suspicious warning from client');
+    error.onclick = () => consoleProxy.error('dangerous error from client');
+  </script>
+</body>
+</html>
